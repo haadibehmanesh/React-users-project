@@ -37,14 +37,18 @@ class Users extends Component {
                   <div className='row'>
                     <div className='col-6'>
                       <button
-                        onClick={this.handleUpdate}
+                        onClick={() => {
+                          this.handleUpdate(user);
+                        }}
                         className='btn btn-sm btn-info '>
                         Update
                       </button>
                     </div>
                     <div className='col-6'>
                       <button
-                        onClick={this.handleDelete}
+                        onClick={() => {
+                          this.handleDelete(user);
+                        }}
                         className='btn btn-sm btn-danger '>
                         Delete
                       </button>
@@ -58,9 +62,36 @@ class Users extends Component {
       </>
     );
   }
-  handleCreate = () => {};
-  handleUpdate = (user) => {};
-  handleDelete = (user) => {};
+  handleCreate = async () => {
+    const newUser = {
+      first_name: "hadi",
+      last_name: "Behmanesh",
+      email: "hadibehmanesh@gmail.com",
+      avatar: "",
+    };
+    const response = await axios.post("https://reqres.in/api/users/", newUser);
+
+    this.setState({ users: [...this.state.users, newUser] });
+  };
+  handleUpdate = async (user) => {
+    user.first_name = "updated";
+    const response = await axios.put(
+      "https://reqres.in/api/users/${user.id}",
+      user
+    );
+    const updatedUsers = [...this.state.users];
+    const index = updatedUsers.indexOf(user);
+    updatedUsers[index] = { ...user };
+    this.setState({ users: updatedUsers });
+  };
+  handleDelete = async (user) => {
+    const response = await axios.delete(
+      "https://reqres.in/api/users/${user.id}"
+    );
+    const newUsers = this.state.users.filter((u) => u.id !== user.id);
+    this.setState({ users: newUsers });
+    //console.log(response);
+  };
 }
 
 export default Users;
