@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import LoadingUsers from "./loading/loadingUsers";
+import { Link, Outlet } from "react-router-dom";
 
 class Users extends Component {
   state = {
@@ -28,11 +29,14 @@ class Users extends Component {
               return (
                 <div key={index} className='col-4 text-center p-5'>
                   <img
+                    alt=''
                     src={user.avatar}
                     style={{ borderRadius: "50%", width: "100%" }}
                   />
-                  <h4>{user.first_name}</h4>
-                  <h4>{user.last_name}</h4>
+                  <Link to={`/users/${user.id}`} key={user.id}>
+                    <h4>{user.first_name}</h4>
+                    <h4>{user.last_name}</h4>
+                  </Link>
                   <span>{user.email}</span>
                   <div className='row'>
                     <div className='col-6'>
@@ -76,7 +80,7 @@ class Users extends Component {
   handleUpdate = async (user) => {
     user.first_name = "updated";
     const response = await axios.put(
-      "https://reqres.in/api/users/${user.id}",
+      `https://reqres.in/api/users/${user.id}`,
       user
     );
     const updatedUsers = [...this.state.users];
@@ -86,7 +90,7 @@ class Users extends Component {
   };
   handleDelete = async (user) => {
     const response = await axios.delete(
-      "https://reqres.in/api/users/${user.id}"
+      `https://reqres.in/api/users/${user.id}`
     );
     const newUsers = this.state.users.filter((u) => u.id !== user.id);
     this.setState({ users: newUsers });
