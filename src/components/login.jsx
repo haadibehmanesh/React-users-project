@@ -1,21 +1,23 @@
-import axios from "axios";
-import React, { Component, createRef } from "react";
+import React, { Component } from "react";
 class Login extends Component {
-  email = createRef();
-  password = createRef();
-  handleSubmit = async (e) => {
-    e.preventDefault();
+  state = {
+    account: {
+      email: "",
+      password: "",
+    },
+  };
 
-    const account = {
-      email: this.email.current.value,
-      passwrod: this.password.current.value,
-    };
-    if (account.email && account.passwrod) {
-      const response = await axios.post(`https://reqres.in/api/login`, account);
-      console.log(response);
-    }
+  handleChange = ({ currentTarget: input }) => {
+    const account = { ...this.state.account };
+    account[input.name] = input.value;
+    this.setState({ account });
+  };
+  handleSubmit = (event) => {
+    event.preventDefault();
+    alert("A name was submitted: " + this.state.value);
   };
   render() {
+    const { email, password } = this.state.account;
     return (
       <>
         <form onSubmit={this.handleSubmit}>
@@ -23,7 +25,9 @@ class Login extends Component {
             <div className='mb-3'>
               <label htmlFor='email'>Email:</label>
               <input
-                ref={this.email}
+                onChange={this.handleChange}
+                value={email}
+                name='email'
                 id='email'
                 className='form-control'
                 type='text'></input>
@@ -31,7 +35,9 @@ class Login extends Component {
             <div className='mb-3'>
               <label htmlFor='password'>Password:</label>
               <input
-                ref={this.password}
+                onChange={this.handleChange}
+                value={password}
+                name='password'
                 id='password'
                 className='form-control'
                 type='password'></input>
