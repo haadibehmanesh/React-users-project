@@ -1,5 +1,5 @@
 import { useLocation, useParams } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import queryString from "query-string";
 
@@ -7,8 +7,6 @@ const User = (props) => {
   let params = useParams();
   const [user, setUser] = useState({});
   const userId = params.id;
-  const firstName = useRef(null);
-
   console.log(queryString.parse(useLocation().search));
   useEffect(() => {
     async function fetchData() {
@@ -19,7 +17,6 @@ const User = (props) => {
 
       setUser(response.data.data);
       // ...
-      console.log(firstName);
     }
     fetchData();
   }, []);
@@ -33,7 +30,7 @@ const User = (props) => {
           style={{ borderRadius: "50%", width: "100%" }}
         />
 
-        <h4 ref={firstName}>{user.first_name}</h4>
+        <h4>{user.first_name}</h4>
         <h4>{user.last_name}</h4>
       </div>
     </>
