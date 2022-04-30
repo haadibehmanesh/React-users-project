@@ -11,11 +11,13 @@ import Users from "./components/users";
 import Login from "./components/login";
 import Register from "./components/register";
 import User from "./components/user";
+import NotFound from "./components/notFound";
 const rootElement = document.getElementById("root");
 
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
+      <Route path='*' element={<NotFound />} />
       <Route path="/" element={<App />} >
         <Route path="/users" element={<Users />} />
 
