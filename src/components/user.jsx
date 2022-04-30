@@ -1,11 +1,14 @@
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import queryString from "query-string";
 
-const User = () => {
+const User = (props) => {
   let params = useParams();
   const [user, setUser] = useState({});
   const userId = params.id;
+
+  console.log(queryString.parse(useLocation().search));
   useEffect(() => {
     async function fetchData() {
       // You can await here
