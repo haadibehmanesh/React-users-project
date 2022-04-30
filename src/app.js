@@ -1,12 +1,14 @@
-import React, { Component } from 'react';
-import Users from './components/users';
-class App extends Component {
-    state = {}
-    render() {
-        return <div>
-            <Users />
-        </div>
-    }
-}
+import { Outlet } from "react-router-dom";
+import Navbar from "./components/navbar";
+export default function App() {
+    return (
+        <div>
 
-export default App;
+
+            <Navbar />
+
+            <Outlet />
+
+        </div>
+    );
+}
