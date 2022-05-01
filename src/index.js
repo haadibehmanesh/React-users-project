@@ -12,6 +12,7 @@ import Login from "./components/login";
 import Register from "./components/register";
 import User from "./components/user";
 import NotFound from "./components/notFound";
+import Dashboard from "./components/dashboard";
 const rootElement = document.getElementById("root");
 
 ReactDOM.render(
@@ -26,6 +27,7 @@ ReactDOM.render(
         <Route path="home" element={<Home />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Route>
 
 

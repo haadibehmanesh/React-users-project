@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Input from "./input";
 import * as yup from "yup";
 import axios from "axios";
+import { withRouter } from "./withRouter";
+
 class Login extends Component {
   state = {
     account: {
@@ -10,6 +12,7 @@ class Login extends Component {
     },
     errors: [],
     sending: false,
+    redirect: false,
   };
   schema = yup.object().shape({
     email: yup
@@ -45,6 +48,11 @@ class Login extends Component {
           `https://reqres.in/api/login`,
           result
         );
+
+        localStorage.setItem("token", response.data.token);
+        //this.setState({ redirect: true });
+        this.props.navigate("/dashboard", true);
+
         this.setState({ sending: false });
       } catch (error) {
         this.setState({ sending: false });
@@ -98,4 +106,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);
