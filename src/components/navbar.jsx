@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import React from "react";
-const Navbar = () => {
+const Navbar = (props) => {
   return (
     <>
       <nav className='navbar navbar-expand-lg navbar-light bg-light'>
@@ -29,28 +29,57 @@ const Navbar = () => {
                   Home
                 </NavLink>
               </li>
-              <li className='nav-item'>
-                <NavLink
-                  style={({ isActive }) => {
-                    return {
-                      color: isActive ? "red" : "black",
-                    };
-                  }}
-                  to='/login'>
-                  Login
-                </NavLink>
-              </li>
-              <li className='nav-item'>
-                <NavLink
-                  style={({ isActive }) => {
-                    return {
-                      color: isActive ? "red" : "black",
-                    };
-                  }}
-                  to='/register'>
-                  Register
-                </NavLink>
-              </li>
+              {!props.user ? (
+                <>
+                  <li className='nav-item'>
+                    <NavLink
+                      style={({ isActive }) => {
+                        return {
+                          color: isActive ? "red" : "black",
+                        };
+                      }}
+                      to='/login'>
+                      Login
+                    </NavLink>
+                  </li>
+                  <li className='nav-item'>
+                    <NavLink
+                      style={({ isActive }) => {
+                        return {
+                          color: isActive ? "red" : "black",
+                        };
+                      }}
+                      to='/register'>
+                      Register
+                    </NavLink>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li className='nav-item'>
+                    <NavLink
+                      style={({ isActive }) => {
+                        return {
+                          color: isActive ? "red" : "black",
+                        };
+                      }}
+                      to='/dashboard'>
+                      Dashboard
+                    </NavLink>
+                  </li>
+                  <li className='nav-item'>
+                    <NavLink
+                      style={({ isActive }) => {
+                        return {
+                          color: isActive ? "red" : "black",
+                        };
+                      }}
+                      to='/logout'>
+                      Logout
+                    </NavLink>
+                  </li>
+                </>
+              )}
               <li className='nav-item'>
                 <NavLink
                   style={({ isActive }) => {
