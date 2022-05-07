@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import Input from "../input";
 import { useNavigate } from "react-router-dom";
+//import { useAuth } from "../context/auth";
 const Login = (props) => {
   const [account, setAccount] = useState({});
 
@@ -14,6 +15,7 @@ const Login = (props) => {
 
   const [errors, setErrors] = useState([]);
   const [sending, setSending] = useState(false);
+  //const { setAuthTokens } = useAuth();
 
   const navigate = useNavigate();
 
@@ -33,10 +35,24 @@ const Login = (props) => {
           `https://reqres.in/api/login`,
           result
         );
-
+        //   setAuthTokens(response.data.token);
+        // console.log(setAuthTokens);
         localStorage.setItem("token", response.data.token);
-        //this.setState({ redirect: true });
-        navigate("/dashboard");
+        const customResponse = {
+          data: {
+            user: {
+              name: "Hadi",
+              email: "test@test.com",
+            },
+          },
+        };
+        if (!customResponse.data.user) {
+          props.setUser(null);
+          return;
+        } else {
+          props.setUser(customResponse.data.user);
+        }
+        navigate("/dashboard", { replace: true });
 
         setSending(false);
       } catch (error) {
