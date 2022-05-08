@@ -52,11 +52,14 @@ export default function App() {
             <Route path="register" element={<Register />} />
             <Route path="logout" element={<LogOut setUser={setLoggedInUser} />} />
             {/* {loggedInuser && <Route path="dashboard" element={<Dashboard setUser={setLoggedInUser} />} />} */}
-            <Route path="dashboard" element={
-                <PrivateRoute user={loggedInuser}>
-                    <Dashboard />
-                </PrivateRoute>
-            } />
+            <Route
+                path="/dashboard"
+                element={
+                    <PrivateRoute>
+                        <Dashboard />
+                    </PrivateRoute>
+                }
+            />
             <Route path='*' element={<NotFound />} />
 
 
