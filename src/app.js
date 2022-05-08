@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Navbar from "./components/navbar";
 import {
@@ -15,9 +15,32 @@ import NotFound from "./components/notFound";
 import Dashboard from "./components/dashboard";
 import Login from "./components/functional/login";
 import LogOut from "./components/logout";
+import PrivateRoute from "./privateRoute";
 
 export default function App() {
     const [loggedInuser, setLoggedInUser] = useState(null);
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            const customResponse = {
+                data: {
+                    user: {
+                        name: "Hadi",
+                        email: "test@test.com",
+                    },
+                },
+            };
+            if (!customResponse.data.user) {
+                setLoggedInUser(null);
+                return;
+            } else {
+                setLoggedInUser(customResponse.data.user);
+            }
+
+        }
+
+    }, [])
+
     return (<>
         <Navbar user={loggedInuser} />
         <Routes>
@@ -28,7 +51,12 @@ export default function App() {
             <Route path="login" element={<Login setUser={setLoggedInUser} />} />
             <Route path="register" element={<Register />} />
             <Route path="logout" element={<LogOut setUser={setLoggedInUser} />} />
-            {loggedInuser && <Route path="dashboard" element={<Dashboard setUser={setLoggedInUser} />} />}
+            {/* {loggedInuser && <Route path="dashboard" element={<Dashboard setUser={setLoggedInUser} />} />} */}
+            <Route path="dashboard" element={
+                <PrivateRoute user={loggedInuser}>
+                    <Dashboard />
+                </PrivateRoute>
+            } />
             <Route path='*' element={<NotFound />} />
 
 
